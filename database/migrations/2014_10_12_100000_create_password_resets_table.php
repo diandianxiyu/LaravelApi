@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Data table for project initialization
+ * 2015-12-15 13:58:12
+ */
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 

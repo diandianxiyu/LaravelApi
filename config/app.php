@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'www.localhost.com:8080/LaravelApi/public/',
 
     /*
     |--------------------------------------------------------------------------
