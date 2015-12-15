@@ -3,56 +3,18 @@
 use App\Task;
 use Illuminate\Http\Request;
 
-/**
- * Display All Tasks
- */
-Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
-});
 
 /**
- * Add A New Task
+ * Methods registered in the routing controller, it can not use the controller class and method name
  */
-Route::get('/task', function (Request $request) {
-    //
+Route::get('task/index', 'TaskController@index');
+Route::get('task/create', 'TaskController@create');
+Route::post('task/store', 'TaskController@store');
+Route::get('task/show', 'TaskController@show');
+Route::get('task/edit', 'TaskController@edit');
+Route::put('task/update', 'TaskController@update');
+Route::delete('task/destroy', 'TaskController@destroy');
 
-    return view('layouts/app');
-});
 
-Route::delete('/task/{id}', function ($id) {
-    Task::findOrFail($id)->delete();
-
-    return redirect('/');
-});
-
-Route::post('/task', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    // Create The Task...
-
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
-
-    return redirect('/');
-});
-
-Route::get('/test', function (Request $request){
-var_dump($request);
-});
-Route::post('/test', function (Request $request){
-    var_dump($request);
-});
-
+Route::post('user/reg', 'UserController@reg');
+Route::post('user/login', 'UserController@login');
