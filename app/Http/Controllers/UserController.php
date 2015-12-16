@@ -12,6 +12,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Validator;
+use Log;
 
 class UserController extends Controller
 {
@@ -33,9 +34,14 @@ class UserController extends Controller
         //验证参数完整性
         if ($validator->fails()) {
             // var_dump($validator);
-            return  $validator->errors()->all();
+            $error =  $validator->errors()->all();
+            //写入日志
+            Log::error(['error'=>$error,'request'=>$request->all(),'header'=>$request->headers,'client_ip'=>$request->getClientIp()]);
+            //返回错误信息
+            return $error;
         }
-        
+
+
 
     }
 
