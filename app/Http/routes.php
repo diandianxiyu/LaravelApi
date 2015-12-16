@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 Route::get('task/index', 'TaskController@index');
 Route::get('task/create', 'TaskController@create');
 Route::post('task/store', 'TaskController@store');
-Route::get('task/show', 'TaskController@show');
+Route::get('task/show/{id}', 'TaskController@show');
 Route::get('task/edit', 'TaskController@edit');
 Route::put('task/update', 'TaskController@update');
 Route::delete('task/destroy', 'TaskController@destroy');

@@ -50,6 +50,7 @@ class TaskController extends Controller
     public function show($id)
     {
         //
+        echo $id;
     }
 
     /**
