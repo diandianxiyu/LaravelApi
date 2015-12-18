@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Log;
@@ -28,8 +29,7 @@ class UserController extends Controller
      */
     public function reg(Request $request)
     {
-        $request_url=$request->fullUrl();
-        //echo $request_url;
+        $request_url=$request->url();
 
         //验证参数
         $validator = Validator::make($request->all(), [
@@ -78,14 +78,58 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 用户通过邮箱和密码进行登录操作
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request)
     {
-        //
+        //获取当前访问的全部的地址
+        $request_url=$request->url();
+
+        //验证参数
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        //验证参数完整性
+        if ($validator->fails()) {
+            // var_dump($validator);
+            $error =  $validator->errors()->all();
+
+            //写入日志
+            Log::error(['error'=>$error,'request'=>$request->all(),'header'=>$request->headers,'client_ip'=>$request->getClientIp()]);
+            //返回错误信息
+            return Error::returnError($request_url,1001);
+        }
+
+        $email=$request->get('email');
+
+        $password=$request->get('password');
+
+        //检查有没有
+        $user_model=User::checkUserLogin($email,$password);
+
+        if($user_model == false){
+            return Error::returnError($request_url,2001);
+        }
+
+        //更新token
+
+
+        $token=User::updateToken($user_model);
+
+
+        //返回对应的结果
+
+        $json_arr=[
+            'request'=>$request_url,
+            'ret'=>User::getUserInfo($user_model->id),
+        ];
+
+        return Common::returnResult($json_arr);
     }
 
 
