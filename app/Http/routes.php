@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
  * Methods registered in the routing controller, it can not use the controller class and method name
  */
 Route::get('task/index', 'TaskController@index');
-Route::get('task/create', 'TaskController@create');
+Route::post('task/create', 'TaskController@create');
 Route::post('task/store', 'TaskController@store');
 Route::get('task/show/{id}', 'TaskController@show');
 Route::get('task/edit', 'TaskController@edit');

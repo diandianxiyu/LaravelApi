@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function reg(Request $request)
     {
-        $request_url=$request->url();
+        $request_url=str_replace("http://".Config::get('app.url'),"",$request->url());
 
         //验证参数
         $validator = Validator::make($request->all(), [
@@ -86,7 +86,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         //获取当前访问的全部的地址
-        $request_url=$request->url();
+        $request_url=str_replace("http://".Config::get('app.url'),"",$request->url());
 
         //验证参数
         $validator = Validator::make($request->all(), [
@@ -117,9 +117,7 @@ class UserController extends Controller
         }
 
         //更新token
-
-
-        $token=User::updateToken($user_model);
+        User::updateToken($user_model);
 
 
         //返回对应的结果

@@ -29,4 +29,21 @@ class Common
         return md5( (md5($string)) );
     }
 
+    /**
+     * 对象转化数组
+     * @param $object
+     * @return mixed
+     */
+    public  static function object2array($object) {
+        if (is_object($object)) {
+            foreach ($object as $key => $value) {
+                $array[$key] = $value;
+            }
+        }
+        else {
+            $array = $object;
+        }
+        return $array;
+    }
+
 }
