@@ -24,6 +24,7 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+        //通过参数进行验证
         //获取当前访问的全部的地址
         $request_url=str_replace("http://".Config::get('app.url'),"",$request->url());
         //参数验证
@@ -31,6 +32,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'page' => 'numeric',
             'num' => 'numeric',
+            'token'=>'required'
         ]);
 
         //否则返回错误信息,并且做日志
@@ -45,10 +47,18 @@ class TaskController extends Controller
             return Error::returnError($request_url,2002);
         }
 
+        //验证token
+
+        $user_id=Common::validateToken($request->get('token'));
+
+        if($user_id == false){
+            return Error::returnError($request_url,2002);
+        }
+
         //分页获取记录,由于Api调用没有界面,所以这个分页还是通过数据库操作进行
 
-        $page=$request->get('page');
-        $num=$request->get('num');
+        $page=$request->get('page')?$request->get('page'):0;
+        $num=$request->get('num')?$request->get('num'):5;
         $list=Task::getListByPage($page,$num);
 
         $next_page=Task::getListNext($page,$num)?1:0;
@@ -78,6 +88,7 @@ class TaskController extends Controller
         //验证参数
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
+            'token'=>'required',
         ]);
 
         //验证参数完整性
@@ -87,6 +98,14 @@ class TaskController extends Controller
             Log::error(['error'=>$error,'request'=>$request->all(),'header'=>$request->headers,'client_ip'=>$request->getClientIp()]);
             //返回错误信息
             return Error::returnError($request_url,1001);
+        }
+
+        //验证token
+
+        $user_id=Common::validateToken($request->get('token'));
+
+        if($user_id == false){
+            return Error::returnError($request_url,2002);
         }
 
         $name=$request->get('name');

@@ -18,6 +18,7 @@ use Validator;
 use Log;
 use App\Libs\Error;
 use App\Libs\Common;
+use Illuminate\Support\Facades\Config;
 
 class UserController extends Controller
 {
@@ -117,14 +118,14 @@ class UserController extends Controller
         }
 
         //更新token
-        User::updateToken($user_model);
-
+       $token= User::updateToken($user_model);
 
         //返回对应的结果
 
         $json_arr=[
             'request'=>$request_url,
             'ret'=>User::getUserInfo($user_model->id),
+            'token'=>$token
         ];
 
         return Common::returnResult($json_arr);

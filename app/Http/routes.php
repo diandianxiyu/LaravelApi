@@ -17,4 +17,4 @@ Route::delete('task/destroy', 'TaskController@destroy');
 
 
 Route::post('user/reg', 'UserController@reg');
-Route::get('user/login', 'UserController@login');
+Route::post('user/login', 'UserController@login');
