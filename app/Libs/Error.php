@@ -36,7 +36,7 @@ class  Error{
             'error'=>$error_text,
         ];
 
-        return Common::returnResult($error_array);
+        return response()->json($error_array);
     }
 
 }

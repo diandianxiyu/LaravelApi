@@ -54,7 +54,7 @@ class Task extends Model
         if(count($list)){
             foreach($list as  $value){
                 $arr_per=Common::object2array($value);
-                unset($arr_per['id']);
+                //unset($arr_per['id']);
                 $arr[]=$arr_per;
             }
         }

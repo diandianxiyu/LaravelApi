@@ -45,7 +45,8 @@ class UserController extends Controller
             $error =  $validator->errors()->all();
             //写入日志
             Log::error(['error'=>$error,'request'=>$request->all(),'header'=>$request->headers,'client_ip'=>$request->getClientIp()]);
-            //返回错误信息
+            //返回错误信息,对应的,
+
             return Error::returnError($request_url,1001);
         }
 

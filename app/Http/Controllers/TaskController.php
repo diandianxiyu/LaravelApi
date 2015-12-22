@@ -31,8 +31,8 @@ class TaskController extends Controller
         //验证参数
         $validator = Validator::make($request->all(), [
             'page' => 'numeric',
-            'num' => 'numeric',
-            'token'=>'required'
+            'per_page' => 'numeric',
+            //'token'=>'required'
         ]);
 
         //否则返回错误信息,并且做日志
@@ -49,11 +49,11 @@ class TaskController extends Controller
 
         //验证token
 
-        $user_id=Common::validateToken($request->get('token'));
-
-        if($user_id == false){
-            return Error::returnError($request_url,2002);
-        }
+//        $user_id=Common::validateToken($request->get('token'));
+//
+//        if($user_id == false){
+//            return Error::returnError($request_url,2002);
+//        }
 
         //分页获取记录,由于Api调用没有界面,所以这个分页还是通过数据库操作进行
 
@@ -88,7 +88,7 @@ class TaskController extends Controller
         //验证参数
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'token'=>'required',
+            //'token'=>'required',
         ]);
 
         //验证参数完整性
@@ -102,11 +102,11 @@ class TaskController extends Controller
 
         //验证token
 
-        $user_id=Common::validateToken($request->get('token'));
-
-        if($user_id == false){
-            return Error::returnError($request_url,2002);
-        }
+//        $user_id=Common::validateToken($request->get('token'));
+//
+//        if($user_id == false){
+//            return Error::returnError($request_url,2002);
+//        }
 
         $name=$request->get('name');
 

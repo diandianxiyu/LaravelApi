@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class User extends Model
 {
-    //
-
-
     /**
      * 查询是不是有这个用户注册了邮件
      * @param $email
@@ -93,10 +90,7 @@ class User extends Model
 
         $token=base64_encode($login_time."&&".$id);
 
-
         $token_login=Crypt::encrypt($token);
-
-
         $user->remember_token=$token;
 
         $user->save();

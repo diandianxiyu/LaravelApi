@@ -13,14 +13,6 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class Common
 {
-    /**
-     * 返回结果
-     * @param $arr
-     * @return string
-     */
-    public static function returnResult($arr){
-        return json_encode($arr);
-    }
 
 
     /**
