@@ -13,7 +13,7 @@ use App\Libs\Common;
 use Illuminate\Support\Facades\Config;
 use App\User;
 use App\Task;
-
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
@@ -32,7 +32,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'page' => 'numeric',
             'per_page' => 'numeric',
-            //'token'=>'required'
+            'token'=>'required'
         ]);
 
         //否则返回错误信息,并且做日志
@@ -44,8 +44,10 @@ class TaskController extends Controller
             //写入日志
             Log::error(['error'=>$error,'request'=>$request->all(),'header'=>$request->headers,'client_ip'=>$request->getClientIp()]);
             //返回错误信息
-            return Error::returnError($request_url,2002);
+//            return Error::returnError($request_url,2002);
+            return  Response::create(json_encode($request_url),Response::HTTP_NOT_FOUND);
         }
+
 
         //验证token
 
