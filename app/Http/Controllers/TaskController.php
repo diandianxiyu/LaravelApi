@@ -168,9 +168,20 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //接收图片
+
+        var_dump($_FILES);
+
+        //pic
+
+        if ($request->hasFile('pic')) {
+            //
+            $request->file('pic')->move('upload', 'pic.png');
+        }
+
+
     }
 
     /**
