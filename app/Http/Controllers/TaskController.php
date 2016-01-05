@@ -177,8 +177,11 @@ class TaskController extends Controller
         //pic
 
         if ($request->hasFile('pic')) {
-            //
-            $request->file('pic')->move('upload', 'pic.png');
+            //文件另存
+            $file=$request->file('pic');
+            $new_file_name=md5(time()) .'.'.$file->getClientOriginalExtension();
+            $filepath="upload/".date('Y').'/'.date('m');
+            $file->move($filepath, $new_file_name);
         }
 
 
